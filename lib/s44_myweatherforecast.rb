@@ -10,10 +10,31 @@ class S44_MyWeatherForecast
   end
 
   def afternoon()
-    summary(:afternoon)
+    summary :afternoon
   end
+  
+  def ahead()
+    self.method(@w.today.ahead).call
+  end
+  
+  alias this_afternoon afternoon  
+  
+  def early_hours()
+    summary :early_hours
+  end    
+  
+  def evening()
+    summary :evening
+  end  
 
-  alias this_afternoon afternoon
+  alias this_evening evening
+  
+  def tonight()
+    summary :night
+  end
+  
+  alias night tonight
+  
 
   private
 
@@ -36,8 +57,16 @@ class S44_MyWeatherForecast
     s3 = "with a minimum temperature of #{min} celcius " + 
                                   "and a maximum temperature of #{max} celcius"
 
-    s1 = "The weather this #{period.to_s} is to be"
+    t = case period
+    when :night
+      'tonight'
+    when :early_hours
+      'in the early hours'
+    else
+      'this ' + period.to_s
+    end
     
+    s1 = "The weather #{t} is to be"
     [s1, s2.downcase, s3].join(' ') + '.'
 
   end

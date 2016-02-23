@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 's44_myweatherforecast'
-  s.version = '0.1.0'
-  s.summary = 'Under development: Uses the myweatherforecast gem to generates a summary of the weather forecast in plain English.'
+  s.version = '0.1.1'
+  s.summary = 'Under development: Uses the myweatherforecast gem to generate a summary of the weather forecast in plain English.'
   s.authors = ['James Robertson']
   s.files = Dir['lib/s44_myweatherforecast.rb']
   s.signing_key = '../privatekeys/s44_myweatherforecast.pem'
