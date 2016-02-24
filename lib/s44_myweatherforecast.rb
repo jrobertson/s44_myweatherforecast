@@ -13,8 +13,8 @@ class S44_MyWeatherForecast
     summary :afternoon
   end
   
-  def ahead()
-    self.method(@w.today.ahead).call
+  def ahead(advance=2)
+    self.method(@w.today.ahead(advance)).call
   end
   
   alias this_afternoon afternoon  
@@ -70,7 +70,7 @@ class S44_MyWeatherForecast
       'this ' + period.to_s
     end
     
-    s1 = "The weather #{t} is to be"
+    s1 = "The weather #{t}, is to be"
     [s1, s2.downcase, s3].join(' ') + '.'
 
   end
