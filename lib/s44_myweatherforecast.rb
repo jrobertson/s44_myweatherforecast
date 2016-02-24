@@ -21,7 +21,11 @@ class S44_MyWeatherForecast
   
   def early_hours()
     summary :early_hours
-  end    
+  end
+  
+  def morning
+    summary :morning
+  end
   
   def evening()
     summary :evening
