@@ -36,7 +36,7 @@ class S44_MyWeatherForecast
   def tomorrow()
     
     s = @w.tomorrow.to_s
-    min, max, desc = s.match(/^\w+: (-?\d{1,2}°) (-?\d{1,2}°), ([^\.]+)\./)\
+    min, max, desc = s.match(/^\w+: (-?\d{1,2}.) (-?\d{1,2}.), ([^\.]+)\./)\
         .captures
     
     outlook('tomorrow', min, max, desc: desc)
