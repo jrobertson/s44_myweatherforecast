@@ -33,6 +33,16 @@ class S44_MyWeatherForecast
 
   alias this_evening evening
   
+  def tomorrow()
+    
+    s = @w.tomorrow.to_s
+    min, max, desc = s.match(/^\w+: (-?\d{1,2}°) (-?\d{1,2}°), ([^\.]+)\./)\
+        .captures
+    
+    outlook('tomorrow', min, max, desc: desc)
+    
+  end
+  
   def tonight()
     summary :night
   end
@@ -58,8 +68,6 @@ class S44_MyWeatherForecast
       "%s, but also %s" % [a2[0..-2].join(', '), a2[-1]]
     end
 
-    s3 = "with a minimum temperature of #{min} celcius " + 
-                                  "and a maximum temperature of #{max} celcius"
 
     t = case period
     when :night
@@ -70,8 +78,16 @@ class S44_MyWeatherForecast
       'this ' + period.to_s
     end
     
-    s1 = "The weather #{t}, is to be"
-    [s1, s2.downcase, s3].join(' ') + '.'
+    outlook(t, min, max, desc: s2)
 
+  end
+  
+  def outlook(t, min, max, desc: '')
+    
+    s3 = "with a minimum temperature of #{min} celcius " + 
+                                  "and a maximum temperature of #{max} celcius"
+        
+    s1 = "The weather #{t},"
+    [s1, desc.downcase, s3].join(' ') + '.'    
   end
 end
