@@ -36,9 +36,7 @@ class S44_MyWeatherForecast
   def tomorrow()
     
     s = @w.tomorrow.to_s
-    min, max, desc = s.match(/^\w+: (-?\d{1,2}.) (-?\d{1,2}.), ([^\.]+)\./)\
-        .captures
-    
+    min, max, desc = s.match(/\w+:\s+([^ ]+) ([^,]+),\s+(.*)\.$/).captures    
     outlook('tomorrow', min, max, desc: desc)
     
   end
@@ -84,10 +82,7 @@ class S44_MyWeatherForecast
   
   def outlook(t, min, max, desc: '')
     
-    s3 = "with a minimum temperature of #{min} celcius " + 
-                                  "and a maximum temperature of #{max} celcius"
-        
-    s1 = "The weather #{t},"
-    [s1, desc.downcase, s3].join(' ') + '.'    
+    "The weather #{t}, #{desc.downcase} with a minimum temperature of #{min} " + 
+        "celcius and a maximum temperature of #{max} celcius."    
   end
 end
