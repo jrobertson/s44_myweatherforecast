@@ -29,7 +29,20 @@ class S44_MyWeatherForecast
   
   def evening()
     summary :evening
-  end  
+  end
+
+  # e.g. is it going to rain tomorrow? return an array of periods within the 
+  # day of when it will rain or an empty array if there is no rain forecast
+  
+  def query(day=:tomorrow, desc='rain')
+    
+    %i(morning afternoon evening early_hours night).select do |x| 
+      @w.method(day.to_sym).call.method(x).call.detect do |x|
+        x.to_s =~ /#{desc}/i
+      end
+    end
+    
+  end
 
   alias this_evening evening
   

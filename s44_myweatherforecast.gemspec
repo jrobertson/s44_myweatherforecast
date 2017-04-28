@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 's44_myweatherforecast'
-  s.version = '0.1.6'
+  s.version = '0.1.7'
   s.summary = 'Uses the myweatherforecast gem to generate a summary of the weather forecast in plain English.'
   s.authors = ['James Robertson']
   s.files = Dir['lib/s44_myweatherforecast.rb']
