@@ -34,12 +34,47 @@ class S44_MyWeatherForecast
   # e.g. is it going to rain tomorrow? return an array of periods within the 
   # day of when it will rain or an empty array if there is no rain forecast
   
-  def query(day=:tomorrow, desc='rain')
-    
-    %i(morning afternoon evening early_hours night).select do |x| 
-      @w.method(day.to_sym).call.method(x).call.detect do |x|
-        x.to_s =~ /#{desc}/i
+  def query(day=:tomorrow, desc='rain', time: false, times: false)
+
+    r2 = %i(morning afternoon evening early_hours night).map do |x| 
+      
+      r = if times then
+        query_period(day.to_sym, x, desc, single_result: false)
+      else
+        query_period(day.to_sym, x, desc)
       end
+    
+      next unless r
+      
+      if time then
+        
+        [x, [r.time, r.summary]]
+        
+      elsif times
+        
+        next if r.empty?
+        [x, r.map {|y| [y.time, y.summary]}]
+        
+      else
+        x
+      end
+    end
+    
+    r2.compact
+    
+  end
+  
+  def query_period(day=:tomorrow, period=:afternoon, desc='rain', single_result: true)
+
+    desc = 'drizzle|rain' if desc =~ /rain/i
+    obj_period = @w.method(day.to_sym).call.method(period.to_sym).call
+
+    return if obj_period.nil?
+    
+    if single_result then
+      obj_period.detect {|x| x.to_s =~ /#{desc}/i }
+    else
+      obj_period.select {|x| x.to_s =~ /#{desc}/i }
     end
     
   end
