@@ -64,18 +64,17 @@ class S44_MyWeatherForecast
     
   end
   
-  def query_period(day=:tomorrow, period=:afternoon, desc='rain', single_result: true)
+  def query_period(day=:tomorrow, period=:afternoon, desc='rain', 
+                   single_result: true)
 
-    desc = 'drizzle|rain' if desc =~ /rain/i
+    desc = 'drizzle|rain|snow|sleet' if desc =~ /rain/i
     obj_period = @w.method(day.to_sym).call.method(period.to_sym).call
 
     return if obj_period.nil?
     
-    if single_result then
-      obj_period.detect {|x| x.to_s =~ /#{desc}/i }
-    else
-      obj_period.select {|x| x.to_s =~ /#{desc}/i }
-    end
+    name = single_result ? :detect : :select
+    
+    obj_period.method(name).call {|x| x.to_s =~ /#{desc}/i }
     
   end
 
@@ -134,3 +133,4 @@ class S44_MyWeatherForecast
         "celcius and a maximum temperature of #{max} celcius."    
   end
 end
+
